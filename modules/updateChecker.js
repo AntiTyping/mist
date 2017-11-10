@@ -1,4 +1,4 @@
-const _ = global._;
+const _ = require('./utils/underscore');
 const Windows = require('./windows');
 const Settings = require('./settings');
 const log = require('./utils/logger').create('updateChecker');

@@ -1,3 +1,5 @@
+const UpdateChecker = require('../../updateChecker');
+
 export function syncFlags(argv) {
     return { type: '[MAIN]:CLI_FLAGS:SYNC', payload: { cliFlags: argv } };
 }
@@ -114,6 +116,18 @@ export function getLanguage(event) {
             dispatch({ type: '[MAIN]:GET_LANGUAGE:SUCCESS', payload: { i18n } });
         } catch (error) {
             dispatch({ type: '[MAIN]:GET_LANGUAGE:FAILURE', error });
+        }
+    }
+}
+
+export function runUpdateChecker() {
+    return async (dispatch, getState) => {
+        dispatch({ type: '[MAIN]:UPDATE_CHECKER:START' });
+        try {
+            await UpdateChecker.run();
+            dispatch({ type: '[MAIN]:UPDATE_CHECKER:FINISH' });
+        } catch (error) {
+            dispatch({ type: '[MAIN]:UPDATE_CHECKER:ERROR', error });
         }
     }
 }
